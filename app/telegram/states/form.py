@@ -2,6 +2,6 @@ from aiogram.fsm.state import State, StatesGroup
 
 
 class Form(StatesGroup):
-    full_name = State()
-    place_of_study = State()
+    name = State()
     nickname = State()
+    discord_nickname = State()

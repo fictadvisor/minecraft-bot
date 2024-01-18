@@ -7,14 +7,13 @@ from app.services.telegram import TelegramService
 
 
 class Form(ui.Modal, title='Реєстрація'):
-    full_name: str = ui.TextInput(label="Введіть ПІБ", placeholder="Шевченко Тарас Григорович", required=True)
-    place_of_study: Optional[str] = ui.TextInput(label="Введіть місце навчання", required=False)
-    nickname: Optional[str] = ui.TextInput(label="Нікнейм у Minecraft", required=True)
+    name: ui.TextInput = ui.TextInput(label="Введіть ім'я", placeholder="Шевченко Тарас Григорович", required=True)
+    nickname: ui.TextInput = ui.TextInput(label="Нікнейм у Minecraft", placeholder="Notch", required=True)
 
     async def on_submit(self, interaction: discord.Interaction):
         await TelegramService.send_registration({
-            "first_name": str(self.full_name),
-            "place_of_study": str(self.place_of_study),
-            "nickname": str(self.nickname)
+            "name": str(self.name),
+            "nickname": str(self.nickname),
+            "discord_nickname": str(interaction.user.global_name)
         }, bot=interaction.client.telegram_bot)
         await interaction.response.edit_message(content="Дякуємо за реєтрацію", view=None)

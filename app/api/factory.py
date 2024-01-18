@@ -46,7 +46,7 @@ def create_app(telegram_bot: Bot, discord_bot: commands.Bot, dispatcher: Dispatc
             from ngrok import ngrok
             port = sys.argv[sys.argv.index("--port") + 1] if "--port" in sys.argv else 8000
             ngrok.set_auth_token(settings.NGROK_AUTHTOKEN.get_secret_value() if settings.NGROK_AUTHTOKEN else None)  # type: ignore
-            tunnel = await ngrok.connect(port)  # type: ignore[misc]
+            tunnel = await ngrok.forward(f"http://127.0.0.1:{port}", authtoken_from_env=True)  # type: ignore[misc]
             public_url = tunnel.url()
             settings.BASE_URL = AnyUrl(public_url)
         await dispatcher.emit_startup(**workflow_data)

@@ -11,7 +11,7 @@ RUN pip install poetry
 
 COPY pyproject.toml poetry.lock ./
 RUN poetry config virtualenvs.create false
-RUN poetry install --no-interaction --no-root --only main
+RUN poetry install
 
 #run stage
 FROM python:${PYTHON_VERSION}-slim

@@ -11,4 +11,4 @@ async def start(message: Message) -> None:
 
 async def register(callback: CallbackQuery, dialog_manager: DialogManager) -> None:
     await callback.message.edit_reply_markup()
-    await dialog_manager.start(Form.full_name, mode=StartMode.RESET_STACK, show_mode=ShowMode.SEND)
+    await dialog_manager.start(Form.name, mode=StartMode.RESET_STACK, show_mode=ShowMode.SEND)

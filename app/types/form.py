@@ -1,7 +1,7 @@
-from typing import TypedDict, Optional
+from typing import TypedDict
 
 
 class Form(TypedDict):
-    full_name: str
-    place_of_study: Optional[str]
+    name: str
     nickname: str
+    discord_nickname: str
