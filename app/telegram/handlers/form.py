@@ -1,4 +1,3 @@
-from typing import Dict, Any
 
 from aiogram import Bot
 from aiogram.enums import ContentType
@@ -7,8 +6,11 @@ from aiogram_dialog import Dialog, Window, DialogManager
 from aiogram_dialog.widgets.input import MessageInput
 from aiogram_dialog.widgets.text import Const
 
+from app.enums.service_type import ServiceType
+from app.messages.form import REGISTRATION
 from app.services.telegram import TelegramService
 from app.telegram.states.form import Form
+from app.types.form import Form as FormData
 
 
 async def name(message: Message, message_input: MessageInput, manager: DialogManager) -> None:
@@ -27,11 +29,11 @@ async def discord_nickname(message: Message, message_input: MessageInput, manage
     await manager.done(data)
 
 
-async def result(data: Dict[str, Any], manager: DialogManager) -> None:
+async def result(data: FormData, manager: DialogManager) -> None:
     user: User = manager.middleware_data["event_from_user"]
     bot: Bot = manager.middleware_data["bot"]
-    await TelegramService.send_registration(data, bot)
-    await bot.send_message(user.id, "Дякуємо за реєстрацію!")
+    await TelegramService.get_instance().send_registration(data, ServiceType.TELEGRAM, user.id)
+    await bot.send_message(user.id, REGISTRATION)
 
 
 form = Dialog(
